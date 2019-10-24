@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <fstream>
+#include <cstdlib>
+using namespace std;
+
+string temat, nick;
+string trescPytan[5];
+string odpA[4], odpB[4], odpC[4], odpD[4];
+string poprawneOdp[5];
+int main()
+{
+
+	
+
+	fstream plik;
+	plik.open("quiz.txt", ios::out | ios::app);
+	for (int i = 0; i < 5; i++)
+	{
+		cout << "Podaj " << i + 1 << " pytanie: ";
+		cin >> trescPytan[i];
+		cout << endl;
+		plik << trescPytan[i] << endl;
+		
+			cout << "Podaj odp A ";
+			cin >> odpA[i];
+			plik << odpA[i] << endl;
+			cout << "Podaj odp B ";
+			cin >> odpB[i];
+			plik << odpB[i] << endl;
+			cout << "Podaj odp C ";
+			cin >> odpC[i];
+			plik << odpC[i] << endl;
+			cout << "Podaj odp D ";
+			cin >> odpD[i];
+			plik << odpD[i] << endl;
+
+		
+		cout << "Podaj poprawna odp: ";
+		cin >> poprawneOdp[i];
+		plik << poprawneOdp[i];
+		cout << endl;
+
+	}
+
+
+	plik.close();
+	
+	
+
+
+
+	
+
+}
