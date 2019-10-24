@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+int fib;
+int wynik;
+int main()
+{
+	cout << "Ktory wyraz fib:";
+	cin >> fib;
+	 int tablica[1000];
+	tablica[0] = 1;
+	tablica[1] = 1;
+	for (int i = 2; i <= fib; i++)
+	{
+		tablica[i] = tablica[i - 1] + tablica[i - 2];
+
+	}
+	cout << tablica[fib-1];
+	
+
+
+	return 0;
+}
