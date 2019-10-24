@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int liczba,licznik=0;
+	int maska = 1;
+	cout << "Wprowadz liczbe";
+	cin >> liczba;
+	for (int i = 0; i < 32; i++)
+	{
+		if (maska & liczba)
+		{
+			licznik++;
+
+		}
+
+		liczba = liczba >> 1;
+
+
+	}
+	 
+	cout << licznik;
+
+
+	
+
+
+
+	return 0;
+}
