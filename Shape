@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+int wys;
+int main()
+{
+	cout << "Podaj wysokosc kwadratu:";
+	cin >> wys;
+	if (!wys)
+	{
+		cout << "Nieprawidlowe dane";
+	}
+	else
+	{
+		cout << "+";
+		for (int i = 0; i < (wys-2); i++)
+		{
+			cout << "-";
+
+		}
+		cout << "+";
+		cout << endl;
+		for  (int i = 0;i < (wys -2); i++)
+		{
+			cout << "|";
+			for (int i = 0; i < (wys-2); i++)
+			{
+				cout << " ";
+
+			}
+			cout << "|"<<endl;
+
+
+		}
+		cout << "+";
+		for (int i = 0; i < (wys-2); i++)
+		{
+			cout << "-";
+
+		}
+		cout << "+";
+	}
+
+
+	return 0;
+}
