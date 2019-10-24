@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+int wynik;
+int sil;
+int main()
+{
+	cout << "Podaj liczbe silni:";
+	cin >> sil;
+	wynik = 1;
+	for (int i = 1; i <=sil; i++)
+	{
+		wynik = wynik * i;
+	}
+	cout << wynik;
+
+
+
+	return 0;
+}
