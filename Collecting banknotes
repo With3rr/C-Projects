@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int moneyy;
+	int moneyType[5] = { 50,20,10,5,1 };
+
+	cout << "How much money: ";
+	cin >> moneyy;
+	while (moneyy>0)
+	{
+		for (int i = 0; i <5; i++)
+		{
+			if (moneyy>=moneyType[i])
+			{
+				moneyy= moneyy  - moneyType[i];
+				cout << moneyType[i]<<' ';
+
+				break;
+			}
+
+		}
+
+	}
+    
+	return 0;
+}
