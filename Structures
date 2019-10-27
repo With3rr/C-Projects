@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	struct DATE {
+		int year;
+		int month;
+		int day;
+	};
+	
+	struct Student
+	{
+
+		string  name;
+		string surname;
+		int date_of_b;
+		
+		struct DATE last_visit;
+
+
+	}students[10];
+
+
+
+	students[0].
+
+	
+
+
+
+	return 0;
+}
