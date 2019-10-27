@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+
+	struct DATE {
+		int hour;
+		int min;
+		int duration;
+
+	};
+
+	struct DATE student1;
+
+	cout << "Enter the hour:";
+	cin >> student1.hour;
+	if (student1.hour > 24)
+	{
+		cout << "invalide num!!";
+		exit(0);
+	}
+	cout << "Enter the minutes:";
+	cin >> student1.min;
+	if (student1.min > 60)
+	{
+		cout << "invalide num!!";
+		exit(0);
+	}
+	cout << "Duration of the event:";
+	cin >> student1.duration;
+
+
+	student1.min += student1.duration;
+	if (student1.min >= 60)
+	{
+		student1.hour += student1.min / 60;
+		student1.min = student1.min % 60;
+		if (student1.hour > 24)
+		{
+			student1.hour %= 24;
+
+		}
+		cout << student1.hour<<" "<<student1.min;
+	}
+	else
+	{
+		cout << student1.hour << " " << student1.min;
+
+	}
+
+
+
+	
+	
+
+
+
+    
+	return 0;
+}
