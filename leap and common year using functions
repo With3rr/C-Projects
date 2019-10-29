@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+bool isLeap(int year)
+{
+	bool resoult;
+	if (!(year % 4 == 0))
+	{
+		resoult = 0;
+		return resoult;
+	}
+	else if(!(year % 100 == 0))
+	{
+		resoult = 1;
+		return resoult;
+
+	}
+	else if (!(year % 400 == 0))
+	{
+		resoult = 0;
+		return resoult;
+
+	}
+	else
+	{
+		resoult = 1;
+		return resoult;
+
+	}
+
+
+}
+
+	
+
+
+int main()
+{
+	for (int yr = 1995; yr < 2017; yr++)
+	{
+		cout << yr << " -> " << isLeap(yr) << endl;
+	}
+		
+	return 0;
+
+}
