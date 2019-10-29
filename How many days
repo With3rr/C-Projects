@@ -1,0 +1,122 @@
+#include <iostream>
+using namespace std;
+
+
+
+struct Date
+{
+	int year;
+	int month;
+	int day;
+};
+bool isLeap(int year)
+{
+	bool resoult;
+	if (!(year % 4 == 0))
+	{
+		resoult = 0;
+		return resoult;
+	}
+	else if(!(year % 100 == 0))
+	{
+		resoult = 1;
+		return resoult;
+
+	}
+	else if (!(year % 400 == 0))
+	{
+		resoult = 0;
+		return resoult;
+
+	}
+	else
+	{
+		resoult = 1;
+		return resoult;
+
+	}
+
+
+}
+int monthLength(int year, int month)
+{
+	int	dni;
+	bool prawda = isLeap(year);
+		switch (month)
+		{
+		case 1:
+			dni = 31;
+			return dni;
+		case 2:
+			if (prawda)
+			{
+				dni = 29;
+				return dni;
+			}
+			else
+			{
+				dni = 28;
+				return dni;
+			}	
+		case 3:
+			dni = 31;
+			return dni;
+		case 4:
+			dni = 30;
+			return dni;
+		case 5:
+			dni = 31;
+			return dni;
+		case 6:
+			dni = 30;
+			return dni;
+		case 7:
+			dni = 31;
+			return dni;
+		case 8:
+			dni = 31;
+			return dni;
+		case 9:
+			dni = 30;
+			return dni;
+		case 10:
+			dni = 31;
+			return dni;
+		case 11:
+			dni = 30;
+			return dni;
+		case 12:
+			dni = 31;
+			return dni;
+
+		}
+}
+int dayOfYear(Date date)
+{
+	int xt=0;
+	for (int i = 1; i < date.month; i++)
+	{
+		xt+= monthLength(date.year, i);
+
+	}
+	return xt+date.day;
+
+}
+
+
+
+
+	
+
+
+int main()
+{
+
+	Date d;
+	cout << "Enter year month day:";
+	cin >> d.year >> d.month >> d.day;
+	cout << dayOfYear(d) << endl;
+	
+	return 0;
+
+}
