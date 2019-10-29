@@ -12,45 +12,47 @@ string poprawneOdp[5];
 int main()
 {
 
-	
-
 	fstream plik;
 	plik.open("quiz.txt", ios::out | ios::app);
+	plik << "Filmy";
+	plik << "Sian Mer";
 	for (int i = 0; i < 5; i++)
 	{
 		cout << "Podaj " << i + 1 << " pytanie: ";
-		cin >> trescPytan[i];
-		cout << endl;
-		plik << trescPytan[i] << endl;
 		
-			cout << "Podaj odp A ";
-			cin >> odpA[i];
-			plik << odpA[i] << endl;
-			cout << "Podaj odp B ";
-			cin >> odpB[i];
-			plik << odpB[i] << endl;
-			cout << "Podaj odp C ";
-			cin >> odpC[i];
-			plik << odpC[i] << endl;
-			cout << "Podaj odp D ";
-			cin >> odpD[i];
-			plik << odpD[i] << endl;
+		getline(cin, trescPytan[i]);//to tylko raz
 
-		
+		plik << trescPytan[i] << endl;
+
+
+		string odpowiedz;
+		cout << "Podaj odp A ";
+		getline(cin, odpA[i]);
+		plik << odpA[i] << endl;
+		cout << "Podaj odp B ";
+		getline(cin, odpB[i]);
+		plik << odpB[i] << endl;
+		cout << "Podaj odp C ";
+		getline(cin, odpC[i]);
+		plik << odpC[i] << endl;
+		cout << "Podaj odp D ";
+		getline(cin, odpD[i]);
+		plik << odpD[i] << endl;
+
+
 		cout << "Podaj poprawna odp: ";
-		cin >> poprawneOdp[i];
+		getline(cin, poprawneOdp[i]);
 		plik << poprawneOdp[i];
-		cout << endl;
 
 	}
 
 
 	plik.close();
-	
-	
 
 
 
-	
+
+
+
 
 }
