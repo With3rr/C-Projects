@@ -1,0 +1,53 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main(void)
+{
+	int maxball;
+	int ballsno;
+	cout << "Max ball number? ";
+	cin >> maxball;
+	cout << "How many balls? ";
+	cin >> ballsno;
+	srand(time(NULL));
+	int* tabliczka = new int[ballsno];
+	int lLosowe;
+	int licznik;
+	bool t;
+	licznik = 0;
+	do
+	{
+		lLosowe = rand() % maxball + 1;
+		t = true;
+		for (int i = 0; i < licznik; i++)
+		{
+			if (tabliczka[i] == lLosowe)
+			{
+				t = false;
+				break;
+			}
+		}
+		if (t)
+		{
+			tabliczka[licznik++] = lLosowe;
+		}
+
+
+
+
+	} while ((licznik < ballsno));
+
+
+	for (int i = 0; i < ballsno; i++)
+	{
+		cout << tabliczka[i]<<" ";
+	}
+
+	
+	
+	
+
+	return 0;
+}
