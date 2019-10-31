@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+#include <iostream>
+using namespace std;
+
+int main(void)
+{
+	int tablica[] = { 3,2,6,1,5,3 };
+	int a;
+
+	for (int i = 0; i < (sizeof tablica/sizeof tablica[0])-1; i++)
+	{
+		for (int j = 1; j < (sizeof tablica / sizeof tablica[0]) ; j++)
+		{
+			a = tablica[j-1];
+			if (tablica[j - 1] > tablica[j])
+			{
+				tablica[j - 1] = tablica[j];
+				tablica[j] = a;
+			}
+		
+
+		}
+
+	}
+
+
+	for (int i = 0; i < 6; i++)
+	{
+		cout << tablica[i];
+
+	}
+	
+
+	return 0;
+}
