@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+bool pierwsza(int a)
+{
+	bool czy=true;
+	if ((a == 0) || (a == 1))
+	{
+		czy = false;
+		return czy;
+	}
+	else if (a == 2)
+	{
+		
+		return czy;
+
+	}
+	else
+	{
+		for (int i = 2; i < a; i++)
+		{
+			if (a % i == 0)
+			{
+				czy = false;
+				return czy;
+			}
+
+		}
+	}
+	return czy;
+	
+
+}
+
+int main()
+{
+	cout << pierwsza(5);
+	
+
+	return 0;
+}
