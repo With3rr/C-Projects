@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+int silnia(int a)
+{
+	int resoult=1;
+
+	for (int i = 1; i <=a ; i++)
+	{
+		resoult = resoult * i;
+
+	}
+
+	return resoult;
+
+}
+
+int main()
+{
+	cout << silnia(5);
+	
+	
+
+	return 0;
+}
