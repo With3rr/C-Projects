@@ -1,0 +1,42 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Samochody
+{
+public:
+	string marka;
+	string model;
+	int rocznik;
+	int przebieg;
+	void wczytajDane()
+	{
+		cout << "Podaj markę auta: ";
+		cin >> marka;
+		cout << "Podaj model auta: ";
+		cin >> model;
+		cout << "Podaj rocznik auta";
+		cin >> rocznik;
+		cout << "Podaj przebieg auta:";
+		cin >> przebieg;
+	}
+	void  wypisz()
+	{
+		cout << "Marka auta to: " << marka << endl;
+		cout << "Model auta to:" << model << endl;
+		cout << "rocznik auta to:" << rocznik << endl;
+		cout << "przebieg auta to:" << przebieg << endl;
+
+
+	}
+
+};
+int main()
+{
+	Samochody s1, s2;
+	s1.wczytajDane();
+	s1.wypisz();
+	
+
+		return 0;
+}
