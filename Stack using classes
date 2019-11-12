@@ -1,0 +1,78 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+class Stack
+{
+private:
+	int stackstore[100];
+	int SP;
+public:
+	Stack(void)
+	{ 
+		SP = 0; 
+	}
+	void push(int value)
+	{
+		stackstore[SP++] = value;
+	}
+
+	int pop(void) 
+	{
+		return stackstore[--SP];
+	}
+};
+
+class AddingStack : public Stack
+{
+private :
+	int sum;
+public:
+	AddingStack()
+	{
+		sum = 0;
+	}
+	void push(int value)
+	{
+		sum += value;
+		Stack::push(value);
+	}
+	int pop(void)
+	{
+		int val = Stack::pop();
+		sum -= val;
+		return val;
+
+	}
+	int getSum(void)
+	{
+		return sum;
+	}
+
+};
+
+
+
+int main()
+{
+	AddingStack s1;
+	s1.push(5);
+	s1.push(11);
+	s1.push(3);
+	s1.pop();
+	s1.pop();
+	s1.pop();
+	cout<<s1.getSum();
+
+
+	
+
+	return 0;
+	
+
+	
+	
+
+	
+
+	
+}
