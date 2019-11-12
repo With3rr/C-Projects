@@ -1,0 +1,60 @@
+#include <iostream>
+#include <math.h>
+using namespace std;
+class Punkt
+{
+public:
+
+	float x, y;
+	string nazwa;
+public:
+	void wyswietl()
+	{
+		cout << nazwa << "(" << x << "," << y << ")"<<endl;
+	}
+	Punkt(string n="s", float a=0, float b=0)
+	{
+		nazwa = n;
+		x = a;
+		y = b;
+
+	}
+
+
+};
+class Kolo :public Punkt //klasa kolo dziedziczy publicznie z klasy pkt
+{
+	float r;
+	string nazwa;
+public:
+	void wyswietl()
+	{
+		cout << "Kolo o nazwie: " << nazwa << endl;
+		cout << "srodek kola:";
+		Punkt::wyswietl();
+		cout << "Proomiec kola: " << r<<endl;
+		cout << "Pole kola :" << 3.14 * r * r << endl;
+	}
+	Kolo(string nk="kolo", string np="S", float a=0, float b=0, float pr=0)
+		: Punkt(np,a,b)
+	{
+		nazwa = nk;
+		r = pr;
+		cout << Punkt::x<<endl;
+		cout << Punkt::y;
+
+	}
+
+};
+
+int main()
+{
+	
+	Kolo k1("dupa","E",11,12,12);
+	
+	
+
+	
+
+	
+}
