@@ -1,0 +1,27 @@
+#include <iostream>
+#include "Prostokont.h"
+#include "Punkt.h"
+using namespace std;
+
+void sedzia(Punkt &pkt, Prostokont &p)
+{
+	if ((pkt.x >= p.x) && (pkt.x <= (p.x + p.szerokosc)) && (pkt.y >= p.y) && (pkt.y <= (pkt.y + p.wysokosc)))
+	{
+		cout << "Punkt : " << pkt.nazwa << "nalezy do prostkokonta: " << p.nazwa;
+	}
+	else
+	{
+		cout << "Punkt : " << pkt.nazwa << "Nie nalezy do prostkokonta: " << p.nazwa;
+
+	}
+
+
+}
+int main()
+{
+	Punkt pkt1("A", 3, 1);
+	//pkt1.wczytaj();
+	Prostokont p1("prostokont", 0, 0, 6, 4);
+	sedzia(pkt1, p1);
+	return 0;
+}
