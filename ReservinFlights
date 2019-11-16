@@ -1,0 +1,129 @@
+include <string>
+#include <iostream>
+using namespace std;
+class FlightBooking
+{
+private:
+	int id;
+	int capacity;
+	int reserved;
+
+public:
+	FlightBooking(int id, int capacity, int reserved);
+	 void printStatus();
+	 bool reserveSeats(int number_of_seats);
+	 bool cancelReservations(int number_ob_seats);
+
+};
+FlightBooking::FlightBooking(int id, int capacity, int reserved)
+{
+	this->id = id;
+	this->capacity = capacity;
+	if (reserved < 0)
+	{
+		FlightBooking::reserved = 0;
+
+	}
+	if (reserved > (capacity + capacity * 0.05))
+	{
+		cout <<"Cannot perform this operation ";
+	}
+	else
+	{
+		FlightBooking::reserved = reserved;
+	}
+	
+
+
+
+}
+bool FlightBooking::reserveSeats(int number_ob_seats)
+{
+	if (reserved + number_ob_seats > (capacity + capacity * 0.05))
+	{
+		return false;
+
+	}
+	else
+	{
+		
+		reserved += number_ob_seats;
+		return true;
+	}
+
+	
+}
+
+bool FlightBooking::cancelReservations(int number_ob_seats)
+{
+	if (reserved >= number_ob_seats)
+	{
+		reserved -= number_ob_seats;
+		return true;
+	}
+	else
+	{
+		return false;
+
+	}
+	
+}
+
+
+void FlightBooking::printStatus()
+{
+	cout << "Flight [" << id << "] : [" << reserved << "] / [" << capacity << "] ([" <<  ((reserved * 100) / capacity) << "]%) seats taken"<<endl;
+}
+int main() {
+	int reserved = 0,
+		capacity = 0;
+	cout << "Provide flight capacity: ";
+	cin >> capacity;
+	cout << "Provide number of reserved seats: ";
+	cin >> reserved;
+	FlightBooking booking(1, capacity, reserved);
+	string command = "";
+	int a;
+	bool czy;
+	booking.printStatus();
+	while (command != "quit")
+	{
+		
+		cout << "What would you like to do?: ";
+		cin >> command;
+		if (command == "add")
+		{
+			cout << "How many seats: ";
+			cin >> a;
+			czy=booking.reserveSeats(a);
+			if (czy == false)
+			{
+				cout << "Cannot perform this operation"<<endl;
+				
+			}
+			else
+			{
+				booking.printStatus();
+			}
+
+		}
+		else if (command == "cancel")
+		{
+			cout << "How many seats: ";
+			cin >>a;
+			czy=booking.cancelReservations(a);
+			if (czy == false)
+			{
+				cout << "Cannot perform this operation"<<endl;
+
+			}
+			else
+			{
+				booking.printStatus();
+			}
+
+		}
+		// handle the command
+	}
+	return 0;
+}
