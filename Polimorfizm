@@ -1,0 +1,61 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+
+class Ksztalt
+{
+public:
+	virtual void oblicz_pole() = 0;
+
+};
+
+class Kolo : public Ksztalt
+{
+	float r;
+public:
+	Kolo(float x)
+	{
+		r = x;
+	}
+	virtual void oblicz_pole()
+	{
+		cout << "Pole kola: " << 3.14 * r * r << endl;
+	}
+
+};
+class Prostokot : public Ksztalt
+{
+
+	float a, b;
+public:
+	Prostokot(float x, float y)
+	{
+		a = x;
+		b = y;
+	}
+	virtual void oblicz_pole()
+	{
+		cout << "Pole prostokota: " << a * b << endl;
+	}
+};
+void obliczenia(Ksztalt* x)
+{
+	x->oblicz_pole();
+}
+
+int main()
+{
+	Kolo k(1);
+	Prostokot kw(3, 2);
+
+	Ksztalt* wsk;
+	wsk = &k;
+	wsk->oblicz_pole();
+	cout << endl;
+
+	wsk = &kw;
+	wsk->oblicz_pole();
+
+	
+	return(0);
+}
