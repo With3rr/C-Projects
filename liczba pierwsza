@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+bool czyp(int liczba)
+{
+	bool x = true;
+	
+	if (liczba == 0 || liczba == 1)
+	{
+		x = false;
+		return x;
+	}
+
+	if (liczba > 2)
+	{
+		for (int  i = 2; i < liczba; i++)
+		{
+			if (liczba % i != 0)
+			{
+
+			}
+			else
+			{
+				x = false;
+				return x;
+			}
+
+		}
+	}
+
+	return x;
+
+	
+
+}
+int main()
+{
+
+	if (czyp(14) == true)
+	{
+		cout << "TAK";
+	}
+	else
+	{
+		cout << "NIE";
+	}
+	
+
+
+	return 0;
+}
