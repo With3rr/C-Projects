@@ -1,0 +1,38 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+int main()
+{
+	int n, * ws;
+	cout << "Ile elementow taqblicy: ";
+	cin >> n;
+	ws = new int[n];
+	int suma=0;
+	for (int i = 0; i < n; i++)
+	{
+		cin >> ws[i];
+		suma += ws[i];
+
+	}
+	cout << endl;
+	cout << endl;
+	cout << "Srednia :" << (float)suma / n;
+	for (int i = 0; i < n; i++)
+	{
+		if (ws[i] > (float)suma / n)
+		{
+			cout << ws[i]<<" ";
+		}
+	}
+
+
+	
+	
+
+
+	
+
+
+	return 0;
+}
