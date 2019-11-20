@@ -1,0 +1,41 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+int *powt(int* ws,int *pot)
+{
+	int* wsk;
+	wsk = new int[2];
+
+	if (*ws > *pot)
+	{
+		wsk[0] = *ws;
+		wsk[1] =(int) pot;
+		return wsk;
+	}
+	else
+	{
+		wsk[0] =  *pot;
+		wsk[1] = (int)ws;
+		return wsk;
+	}
+	
+	
+
+}
+int main()
+{
+	int a = 4,b=5,*ws,*wss;
+	ws = &a;
+	wss = &b;
+	
+	int *x=powt(ws,wss);
+	cout<<x[0]<<endl;
+	cout << x[1] << endl;
+	
+	
+	
+	
+
+
+	return 0;
+}
