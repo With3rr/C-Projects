@@ -1,0 +1,105 @@
+#include <iostream>
+#include <time.h>
+#include<conio.h>
+using namespace std;
+bool gameOver;
+const int width = 20;
+const int height = 20;
+int xpoz, ypoz, xfruit, yfruit,score;
+enum eDirection
+{
+	STOP=0,
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+	
+};
+eDirection direction;
+void Setup()
+{
+	gameOver = false;
+	direction = STOP;
+	xpoz = width / 2;
+	ypoz = height / 2;
+	xfruit = rand() % width;
+	yfruit = rand() % height;
+}
+void Draw()
+{
+	system("cls");
+	for (int i = 0; i < width+2; i++)
+	{
+		cout << "#";
+		
+	}
+	cout << endl;
+
+	for (int i = 0; i < height ; i++)
+	{
+		cout << "#";
+		for (int j = 0; j <height ; j++)
+		{
+			if (i == ypoz && j == xpoz)
+			{
+				cout << "G";
+				j++;
+			}
+			if (i == yfruit && j == xfruit)
+			{
+				cout << "F";
+				j++;
+			}
+			
+			
+			cout << " ";
+
+
+		}
+		cout << "#";
+		cout << endl;
+	}
+
+	for (int i = 0; i < width+2; i++)
+	{
+		cout << "#";
+
+	}
+
+
+}
+void Input()
+{
+
+	if (_kbhit())
+	{
+		switch (_getch())
+		{
+			
+		}
+
+	}
+
+
+}
+void Logic()
+{
+
+
+}
+
+
+int main()
+{
+	srand(time(NULL));
+	Setup();
+	/*while (!gameOver)
+	{
+		
+		Input();
+		Logic();
+
+	}*/
+	Draw();
+	return 0;
+}
