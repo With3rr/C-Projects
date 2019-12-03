@@ -9,9 +9,8 @@ bool gameOver;
 const int width = 20;
 const int height = 20;
 int xpoz, ypoz, xfruit, yfruit,score;
-int* tailx = new int[100], * taily=new int[100], ntail;
-
-
+int* tailx = new int[100], * taily = new int[100], ntail;
+int prevx, prevy, sprevx, sprevy;
 enum eDirection
 {
 	STOP=0,
@@ -40,14 +39,18 @@ void Draw()
 		
 	}
 	cout << endl;
+
 	for (int i = 0; i < height ; i++)
 	{
+		
 		for (int j = 0; j <width; j++)
 		{
 			if (j == 0)
 			{
 				cout << "#";
 			}
+
+			
 			if (i == ypoz && j == xpoz)
 			{
 
@@ -61,23 +64,42 @@ void Draw()
 			}
 			else
 			{
-				cout << " ";
+				for (int s = 0; s < ntail; s++)
+				{
+					if (tailx[s] == j && taily[s] == i)
+					{
+						cout << "o";
+					}
+					else
+					{
+						cout << " ";
+					}
+
+				}
 
 			}
+			
 			if (j == width -1)
 			{
 				cout << "#";
 
-			}		
+			}
+			
+			
 		}
+		
 		cout << endl;
 	}
+
 	for (int i = 0; i < width+2; i++)
 	{
 		cout << "#";
 
 	}
+
 	cout << "Score: " << score;
+
+
 }
 void Input()
 {
@@ -105,9 +127,13 @@ void Input()
 		}	
 
 	}
+
+
 }
 void Logic()
 {
+	
+	
 	switch (direction)
 	{
 	case LEFT:
@@ -130,20 +156,25 @@ void Logic()
 		gameOver = true;
 
 	}
+
 	if (xpoz == xfruit && ypoz == yfruit)
 	{
-		ntail++;
 		score += 100;
 		xfruit = rand() % (width-1);
 		yfruit = rand() % (height-1);
 	}
+	
+
+
+
 }
 int main()
 {
+	
+
+	
 	srand(time(NULL));
 	Setup();
-	int* tailx, * taily, ntail;
-	tailx = new int[100];
 	
 	while (!gameOver)
 	{
@@ -156,5 +187,7 @@ int main()
 		
 
 	}
+	
 	return 0;
 }
+
