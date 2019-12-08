@@ -4,20 +4,23 @@ using namespace std;
 
 class Avatar
 {
-private:
+public:
 
-	string *name;
-	int *liczbapkt;
+	string* name=new string,*haslo=new string;
+	int* liczbapkt=new int;
 	enum poziomTrudn
 	{
 		latwy,
 		sredni,
 		trudny
-	} *trudnosc;
-	string *jezyk;
-	Avatar(string, int, poziomTrudn, string);
+	} *trudnosc=new poziomTrudn;
+	
+	
+	Avatar(void);
 	~Avatar();
+	friend void wybierz(Avatar *a);
+	friend void opcje(Avatar *s);
+	void ustawieniepoziomu(int i);
 
 
 };
-
