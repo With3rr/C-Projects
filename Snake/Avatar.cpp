@@ -1,15 +1,29 @@
 #include "Avatar.h"
 using namespace std;
-
-Avatar::Avatar(string aName, int aLiczba, poziomTrudn aPoziom, string ajezyk)
+Avatar::Avatar(void)
 {
-	name = new string;
-	liczbapkt = new int;
-	trudnosc = new poziomTrudn;
-	jezyk = new string;
+
+}
+Avatar::~Avatar()
+{
+	delete name;
+	delete liczbapkt;
+	delete trudnosc;
 	
-	*name = aName;
-	*liczbapkt = aLiczba;
-	*trudnosc = aPoziom;
-	*jezyk = ajezyk;
+}
+void Avatar::ustawieniepoziomu(int i)
+{
+	if (i == 1)
+	{
+		*trudnosc = latwy;
+	}
+	else if (i == 2)
+	{
+		*trudnosc = sredni;
+	}
+	else if (i == 3)
+	{
+		*trudnosc = trudny;
+	}
+
 }
