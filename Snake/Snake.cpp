@@ -4,13 +4,16 @@
 #include <string>
 #include<windows.h>
 #include "Avatar.h"
+#include <fstream>
 using namespace std;
 
 bool gameOver;
 const int width = 20;
 const int height = 20;
 int xpoz, ypoz, xfruit, yfruit, score;
-int* tailx = new int[100], * taily = new int[100], ntail,pamiec, prevx, prevy, ss, zz;
+int* tailx = new int[100], * taily = new int[100], ntail, pamiec, prevx, prevy, ss, zz;
+fstream plik;
+
 
 enum eDirection
 {
@@ -19,18 +22,21 @@ enum eDirection
 	RIGHT,
 	UP,
 	DOWN
-	
+
 
 };
 eDirection direction;
 void Setup()
 {
+	ntail = 0;
+	pamiec = STOP;
 	gameOver = false;
 	direction = STOP;
 	xpoz = width / 2;
 	ypoz = height / 2;
 	xfruit = rand() % (width - 1);
 	yfruit = rand() % (height - 1);
+	score=0;
 }
 void Draw()
 {
@@ -125,7 +131,7 @@ void Input()
 				pamiec = LEFT;
 
 			}
-			
+
 			break;
 		case 'd':
 			if (pamiec != LEFT)
@@ -133,7 +139,7 @@ void Input()
 				direction = RIGHT;
 				pamiec = RIGHT;
 			}
-			
+
 			break;
 		case 'w':
 			if (pamiec != DOWN)
@@ -149,7 +155,7 @@ void Input()
 				pamiec = DOWN;
 
 			}
-			
+
 			break;
 		case 'o':
 			gameOver = true;
@@ -163,10 +169,10 @@ void Input()
 }
 void Logic()
 {
-	
-	
-	
-	for (int i = 0; i <ntail ; i++)
+
+
+
+	for (int i = 0; i < ntail; i++)
 	{
 		if (i == 0)
 		{
@@ -186,12 +192,12 @@ void Logic()
 			prevy = zz;
 
 		}
-		
+
 
 
 	}
 
-	
+
 
 
 
@@ -216,7 +222,7 @@ void Logic()
 	if (xpoz > width - 1 || xpoz < 0 || ypoz>height - 1 || ypoz < 0)
 	{
 		gameOver = true;
-		
+
 
 	}
 	for (int i = 0; i < ntail; i++)
@@ -227,11 +233,11 @@ void Logic()
 		}
 
 	}
-	
+
 
 	if (xpoz == xfruit && ypoz == yfruit)
 	{
-		
+
 		score += 100;
 		xfruit = rand() % (width - 1);
 		yfruit = rand() % (height - 1);
@@ -242,35 +248,159 @@ void Logic()
 
 
 }
-void Menu(void)
+void wybierz(Avatar *a)
 {
-	cout << "Welcome to the snake world!!!"<<endl;
-	cout<<"Create your avatar:"
+	int *wybor=new int;
+	string* potwiedzeniehasla = new string;
+	bool* konto = new bool;
+	*konto = false;
+	string* namee = new string;
+	string* hasloo = new string;
+
+	cout << "1-Stwórz konto"<<endl;
+	cout << "2-Logowanie" << endl;
+	cout << "3-Wyjdz" << endl;
+	cin >> *wybor;
+	switch (*wybor)
+	{
+	case 1:
+		do
+		{
+			cout << "Podaj nickname:" << endl;
+			 cin >> *namee;
+			 *(a->name) = *namee;
+			cout << "Podaj haslo:" << endl;
+			cin >> *hasloo;
+			*(a->haslo) = *hasloo;
+			cout << "Potwierdz haslo:" << endl;
+			cin >> *potwiedzeniehasla;
+			if (*(a->haslo) == *potwiedzeniehasla)
+			{
+				cout << "Twoje konto zostało założone :)"<<endl;
+				*konto = true;
+				plik.open("snake.txt",ios::out);
+				plik << *namee<<endl;
+				plik << *hasloo << endl;
+				
+				
+				system("cls");
+				
+
+			}
+			else
+			{
+				cout << "Dane niepoprawne,prosze ponowic proces:";
+				
+				system("cls");
+
+			}
+
+		} while (*konto==false);
+		delete konto;
+		delete potwiedzeniehasla;
+		delete wybor;
+		
+		
+		
+		break;
+	case 2:
+		cout << "Podaj nickname";
+		//trzeba tu dokonczyc
+			break;
+	case 3:
+		exit(0);
+		break;
+	}
+	
+
+
+	
+	
+
+}
+void opcje(Avatar *s)
+{
+	int* wybor = new int;
+	int* wybor2 = new int;
+
+	cout << "1-Nowa gra"<<endl;
+	cout << "2-Wyjdz"<<endl;
+	cin >> *wybor;
+	switch (*wybor)
+	{
+	case 1:
+		cout << "Wybierz poziom trudnosci: " << endl;
+		cout << "1-Latwy" << endl;
+		cout << "2-Sredni" << endl;
+		cout << "3-Trudny" << endl;
+		cin >> *wybor2;
+		switch (*wybor2)
+		{
+		case 1:
+			s->ustawieniepoziomu(1);
+			break;
+		case 2:
+			s->ustawieniepoziomu(2);
+			break;
+		case 3:
+			s->ustawieniepoziomu(3);
+			break;
+		}
+		break;
+	case 2:
+		exit(0);
+		break;
+	}
+	
+
+
+
+
+	
+}
+void spij(Avatar* aa)
+{
+	switch(*(aa->trudnosc))
+	{
+	case 0:
+		Sleep(150);
+		break;
+	case 1:
+		Sleep(75);
+		break;
+	case 2:
+		break;
+	}
 
 }
 int main()
 {
 	
-	
-
-
-
-
 	srand(time(NULL));
-	Setup();
+	Avatar* a1 = new Avatar;
 
+	wybierz(a1);
+
+	opcje(a1);
+	
+	Sleep(1000);
+
+	Setup();
 
 	while (!gameOver)
 	{
-
-		Sleep(50);
+		spij(a1);
 		Draw();
 		Input();
 		Logic();
 
 
 
+
 	}
+	plik << score;
+	
+	
 
 	return 0;
 }
