@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+struct Modulo
+{
+	static const int modul;
+	int numb;
+	Modulo():numb(0)
+	{
+	}
+	Modulo(int numb) :numb( numb%modul)
+	{
+
+	}
+	/*Modulo operator +(Modulo);*/
+	friend Modulo operator+(Modulo a, Modulo b);
+};
+const int Modulo::modul = 7;
+/*Modulo Modulo::operator+(Modulo a)
+{
+	return this->numb + a.numb;
+
+}*/
+
+Modulo operator+(Modulo a, Modulo b)
+{
+
+	return a.numb + b.numb;
+
+}
+
+
+int main()
+{
+	
+	Modulo m(5), n(6), k;
+	k = m + n;
+	cout << k.numb;
+
+	return 0;
+}
