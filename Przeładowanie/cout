@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+class Osoba
+{
+private:
+	string nazwa;
+	int wiek;
+public:
+	Osoba(string, int);
+	friend ostream& operator<<(ostream&, Osoba&);
+
+};
+Osoba::Osoba(string a, int b)
+	:nazwa(a),wiek(b)
+{
+}
+ostream& operator <<(ostream& a, Osoba& b)
+{
+	return a << b.nazwa << " " << b.wiek << " lat";
+}
+int main()
+{
+	Osoba a1("Maria", 20);
+	cout << a1;
+	
+	
+	
+
+	return 0;
+}
