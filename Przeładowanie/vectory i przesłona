@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+class Pkt;
+class Vector
+{
+private:
+	int x, y, z;
+	
+public:
+	Vector(int, int, int);
+	friend Vector operator +(Vector a, Vector b);
+	friend Pkt operator +(Vector a, Pkt b);
+	friend ostream& operator <<(ostream& a, Vector& b);
+
+};
+class Pkt
+{
+private:
+	int x, y, z;
+public:
+	Pkt(int, int, int);
+	friend Pkt operator +(Vector a, Pkt b);
+	friend ostream& operator <<(ostream& a, Pkt& b);
+	
+};
+Vector::Vector(int a, int b, int c)
+	:x(a),y(b),z(c)
+{
+}
+Pkt::Pkt(int a, int b, int c)
+	:x(a),y(b),z(c)
+{
+}
+Vector operator +(Vector a, Vector b)
+{
+
+	return Vector(a.x + b.x, a.y + b.y, a.z + b.z);
+}
+Pkt operator +(Vector a, Pkt b)
+{
+	return Pkt(b.x + a.x, b.y + a.y, b.z + a.z);
+
+}
+ostream& operator <<(ostream& a, Vector &b)
+{
+	return a << b.x << " " << b.y << " " << b.z ;
+}
+ostream& operator <<(ostream& a, Pkt& b)
+{
+	return a << b.x << " " << b.y << " " << b.z;
+}
+
+
+
+
+int main()
+{
+	Vector a1(1,2,3), a2(4,5,6);
+	Pkt s1(3,2,1), s2(6,5,4);
+	Vector a3=a1 + a2;
+	cout << a3;
+	
+	
+
+	return 0;
+}
