@@ -1,3 +1,6 @@
+// ConsoleApplication9.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
+//
+
 #include <iostream>
 #include <time.h>
 #include<conio.h>
@@ -10,8 +13,12 @@ using namespace std;
 bool gameOver;
 const int width = 20;
 const int height = 20;
-int xpoz, ypoz, xfruit, yfruit, score;
-int* tailx = new int[100], * taily = new int[100], ntail, pamiec, prevx, prevy, ss, zz;
+int xpoz, ypoz, xfruit, yfruit, score,maxscore;
+int* tailx = new int[100], * taily = new int[100], ntail, pamiec;
+int* prevx = new int;
+int* prevy = new int;
+int* ss = new int;
+int* zz = new int;
 fstream plik;
 
 
@@ -26,6 +33,18 @@ enum eDirection
 
 };
 eDirection direction;
+void czygameover()
+{
+	if (gameOver == true)
+	{
+		delete[] tailx;
+		delete[] taily;
+
+		tailx = new int[100];
+		taily = new int[100];
+
+	}
+}
 void Setup()
 {
 	ntail = 0;
@@ -36,7 +55,7 @@ void Setup()
 	ypoz = height / 2;
 	xfruit = rand() % (width - 1);
 	yfruit = rand() % (height - 1);
-	score=0;
+	score = 0;
 }
 void Draw()
 {
@@ -176,20 +195,20 @@ void Logic()
 	{
 		if (i == 0)
 		{
-			prevx = tailx[0];
-			prevy = taily[0];
+			*(prevx) = tailx[0];
+			*(prevy) = taily[0];
 			tailx[0] = xpoz;
 			taily[0] = ypoz;
 
 		}
 		else
 		{
-			ss = tailx[i];
-			zz = taily[i];
-			tailx[i] = prevx;
-			taily[i] = prevy;
-			prevx = ss;
-			prevy = zz;
+			*(ss) = tailx[i];
+			*(zz) = taily[i];
+			tailx[i] = *(prevx);
+			taily[i] = *(prevy);
+			*(prevx) = *(ss);
+			*(prevy)=*(zz);
 
 		}
 
@@ -248,16 +267,16 @@ void Logic()
 
 
 }
-void wybierz(Avatar *a)
+void wybierz(Avatar* a)
 {
-	int *wybor=new int;
+	int* wybor = new int;
 	string* potwiedzeniehasla = new string;
 	bool* konto = new bool;
 	*konto = false;
 	string* namee = new string;
 	string* hasloo = new string;
 
-	cout << "1-Stwórz konto"<<endl;
+	cout << "1-Stworz konto" << endl;
 	cout << "2-Logowanie" << endl;
 	cout << "3-Wyjdz" << endl;
 	cin >> *wybor;
@@ -266,9 +285,10 @@ void wybierz(Avatar *a)
 	case 1:
 		do
 		{
+			system("cls");
 			cout << "Podaj nickname:" << endl;
-			 cin >> *namee;
-			 *(a->name) = *namee;
+			cin >> *namee;
+			*(a->name) = *namee;
 			cout << "Podaj haslo:" << endl;
 			cin >> *hasloo;
 			*(a->haslo) = *hasloo;
@@ -276,56 +296,103 @@ void wybierz(Avatar *a)
 			cin >> *potwiedzeniehasla;
 			if (*(a->haslo) == *potwiedzeniehasla)
 			{
-				cout << "Twoje konto zostało założone :)"<<endl;
-				*konto = true;
-				plik.open("snake.txt",ios::out);
-				plik << *namee<<endl;
-				plik << *hasloo << endl;
-				
-				
 				system("cls");
-				
+				cout << "Konto zalozone :)" << endl;
+				Sleep(100);
+				*konto = true;
+				plik.open("snake.txt", ios::out);
+				plik << *namee << endl;
+				plik << *hasloo << endl;
+				maxscore = 0;
+				Sleep(1000);
+
+
+				system("cls");
+
 
 			}
 			else
 			{
 				cout << "Dane niepoprawne,prosze ponowic proces:";
-				
+
 				system("cls");
 
 			}
 
-		} while (*konto==false);
+		} while (*konto == false);
 		delete konto;
 		delete potwiedzeniehasla;
 		delete wybor;
-		
-		
-		
+
+
+
 		break;
 	case 2:
-		cout << "Podaj nickname";
-		//trzeba tu dokonczyc
-			break;
+		system("cls");
+		plik.open("snake.txt", ios::in);
+		if (plik.good() == false)
+		{
+			cout << "Brak zapisanych kont !!!!";
+			exit(0);
+		}
+		else
+		{
+			string tymimie, tymhaslo;
+			string linia;
+			int nr_lini = 1;
+			while (getline(plik, linia))
+			{
+				switch (nr_lini)
+				{
+				case 1:
+					*(a->name) = linia;
+					break;
+				case 2:
+					*(a->haslo) = linia;
+					break;
+				case 3:
+					maxscore = stoi(linia);
+					break;
+				}
+				nr_lini++;
+			}
+			cout << "Podaj nick:";
+			cin >> tymimie;
+			cout << "Podaj haslo:";
+			cin >> tymhaslo;
+			if (*(a->name) != tymimie || tymhaslo != *(a->haslo))
+			{
+				cout << "Niepoprawne dane";
+				Sleep(100);
+				exit(0);
+			}
+
+
+		}
+		
+
+		break;
 	case 3:
 		exit(0);
 		break;
 	}
-	
 
 
-	
-	
+
+
+
 
 }
-void opcje(Avatar *s)
+void opcje(Avatar* s)
 {
 	int* wybor = new int;
 	int* wybor2 = new int;
 
-	cout << "1-Nowa gra"<<endl;
-	cout << "2-Wyjdz"<<endl;
+	cout << "1-Nowa gra" << endl;
+	cout << "2-Wyjdz" << endl;
 	cin >> *wybor;
+	system("cls");
+
 	switch (*wybor)
 	{
 	case 1:
@@ -334,6 +401,7 @@ void opcje(Avatar *s)
 		cout << "2-Sredni" << endl;
 		cout << "3-Trudny" << endl;
 		cin >> *wybor2;
+		system("cls");
 		switch (*wybor2)
 		{
 		case 1:
@@ -346,21 +414,22 @@ void opcje(Avatar *s)
 			s->ustawieniepoziomu(3);
 			break;
 		}
+		
 		break;
 	case 2:
 		exit(0);
 		break;
 	}
-	
 
 
 
 
-	
+
+
 }
 void spij(Avatar* aa)
 {
-	switch(*(aa->trudnosc))
+	switch (*(aa->trudnosc))
 	{
 	case 0:
 		Sleep(150);
@@ -373,34 +442,94 @@ void spij(Avatar* aa)
 	}
 
 }
+struct
+{
+	char znak;
+	int kod;
+}aabb;
 int main()
 {
-	
+
 	srand(time(NULL));
 	Avatar* a1 = new Avatar;
 
 	wybierz(a1);
-
-	opcje(a1);
-	
-	Sleep(1000);
-
-	Setup();
-
-	while (!gameOver)
+	system("cls");
+	while (true)
 	{
-		spij(a1);
-		Draw();
-		Input();
-		Logic();
+		opcje(a1);
+		Setup();
+
+		while (!gameOver)
+		{
+			spij(a1);
+			Draw();
+			Input();
+			Logic();
+			cout << endl;
 
 
+
+
+		}
+		if (score > maxscore)
+		{
+			maxscore = score;
+		}
+		if (gameOver)
+		{
+			system("cls");
+			cout << "#############################" << endl;
+			cout << "	KONIEC GRY     " << endl;
+			cout << "#############################" << endl;
+			cout << "Liczba zdobytych pkt:" << score<<endl;
+			cout << "Max score: " << maxscore<<endl;
+			cout << "Nacisnij klawisz aby kontynuowac:";
+			while (true)
+			{
+				if (_kbhit())
+				{
+					aabb.znak = _getch();
+					aabb.kod = static_cast<int>(aabb.znak);
+					if (aabb.kod == 13)
+					{
+						break;
+					}
+					else if (aabb.kod = 27)
+					{
+						exit(0);
+					}
+
+				}
+
+
+			}
+			plik << maxscore;
+
+			system("cls");
+
+		}
+		czygameover();
+		
+		
 
 
 	}
-	plik << score;
 	
-	
+
+
+
 
 	return 0;
 }
+
+// Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
+// Debugowanie programu: F5 lub menu Debugowanie > Rozpocznij debugowanie
+
+// Porady dotyczące rozpoczynania pracy:
+//   1. Użyj okna Eksploratora rozwiązań, aby dodać pliki i zarządzać nimi
+//   2. Użyj okna programu Team Explorer, aby nawiązać połączenie z kontrolą źródła
+//   3. Użyj okna Dane wyjściowe, aby sprawdzić dane wyjściowe kompilacji i inne komunikaty
+//   4. Użyj okna Lista błędów, aby zobaczyć błędy
+//   5. Wybierz pozycję Projekt > Dodaj nowy element, aby utworzyć nowe pliki kodu, lub wybierz pozycję Projekt > Dodaj istniejący element, aby dodać istniejące pliku kodu do projektu
+//   6. Aby w przyszłości ponownie otworzyć ten projekt, przejdź do pozycji Plik > Otwórz > Projekt i wybierz plik sln
