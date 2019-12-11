@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+class kij
+{
+private:
+	int dlg;
+public:
+	kij(int);
+	friend bool operator !(kij& a);
+
+};
+kij::kij(int a)
+	:dlg(a)
+{
+}
+bool operator !(kij& a)
+{
+	return a.dlg > 10;
+
+}
+
+
+
+int main()
+{
+	kij a1(5);
+	cout<<!a1;
+
+	
+	return 0;
+}
