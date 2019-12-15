@@ -1,0 +1,137 @@
+1.	SELECT e.LoginID 
+FROM HumanResources.Employee AS e 
+INNER JOIN Sales.SalesPerson AS s 
+ON e.BusinessEntityID = s.BusinessEntityID; 
+2.	SELECT p.Name, pr.ProductReviewID 
+FROM Production.Product p 
+LEFT OUTER JOIN Production.ProductReview pr 
+ON p.ProductID = pr.ProductID; 
+3.	SELECT st.Name AS Territory, sp.BusinessEntityID 
+FROM Sales.SalesTerritory st 
+RIGHT OUTER JOIN Sales.SalesPerson sp 
+ON st.TerritoryID = sp.TerritoryID; 
+4.	SELECT DISTINCT pv1.ProductID, pv1.BusinessEntityID 
+FROM Purchasing.ProductVendor pv1 
+INNER JOIN Purchasing.ProductVendor pv2 
+ON pv1.ProductID = pv2.ProductID 
+AND pv1.BusinessEntityID <> pv2.BusinessEntityID 
+ORDER BY pv1.ProductID; 
+5.	SELECT * FROM TestA 
+UNION ALL 
+SELECT * FROM TestB; 
+6.	SELECT ProductID 
+FROM Production.Product 
+EXCEPT 
+SELECT ProductID 
+FROM Production.WorkOrder; 
+7.	SELECT ProductID 
+FROM Production.Product 
+INTERSECT 
+SELECT ProductID 
+FROM Production.WorkOrder; 
+8.	SELECT TOP(15) PERCENT 
+ProductID 
+FROM Production.Product 
+ORDER BY ProductID; 
+9.	SELECT FirstName, LastName FROM Person.Person 
+TABLESAMPLE (10 PERCENT); 
+10.	SELECT Name 
+FROM Production.Product 
+WHERE ListPrice = 
+(SELECT ListPrice 
+FROM Production.Product 
+WHERE Name = 'Chainring Bolts'); 
+11.	SELECT Name 
+FROM Production.Product 
+WHERE EXISTS 
+            (SELECT * 
+            FROM Production.ProductSubcategory 
+            WHERE ProductSubcategoryID = 
+            Production.Product.ProductSubcategoryID 
+            AND Name = 'Wheels'); 
+12.	SELECT DISTINCT c.LastName, c.FirstName 
+FROM Person.Person c JOIN HumanResources.Employee e 
+ON e.BusinessEntityID = c.BusinessEntityID 
+WHERE 5000.00 IN 
+(SELECT Bonus 
+FROM Sales.SalesPerson sp 
+WHERE e.BusinessEntityID = sp.BusinessEntityID); 
+13.	SELECT ProductID, OrderQty 
+FROM Sales.SalesOrderDetail s1 
+WHERE s1.OrderQty < 
+(SELECT AVG (s2.OrderQty) 
+FROM Sales.SalesOrderDetail s2 
+WHERE s2.ProductID = s1.ProductID); 
+
+
+
+2
+
+
+Odpowiedzi 
+1.	INSERT INTO Production.UnitMeasure 
+VALUES (N'F2', N'Square Feet', GETDATE()); 
+2.	INSERT INTO Person.PersonPhone 
+VALUES (N'1705', N'864-555-2101', N'3', GETDATE()), 
+(N'1706', N'712-555-0118', N'1', GETDATE()); 
+3.	DECLARE @MyTableVar table( ScrapReasonID smallint, Name varchar(50), ModifiedDate datetime); 
+INSERT Production.ScrapReason 
+            OUTPUT INSERTED.ScrapReasonID, INSERTED.Name, INSERTED.ModifiedDate 
+            INTO @MyTableVar 
+VALUES (N'Operator error', GETDATE()); 
+ 
+--Wyświetlenie danych z tabeli tymczasowej 
+SELECT ScrapReasonID, Name, ModifiedDate FROM @MyTableVar; --Wyśiwtlenie danych z tabeli Production.ScrapReason. 
+SELECT ScrapReasonID, Name, ModifiedDate 
+FROM Production.ScrapReason; 
+4.	DELETE FROM Production.ProductCostHistory WHERE StandardCost > 1000.00; 
+5.	DELETE FROM Sales.SalesPersonQuotaHistory FROM Sales.SalesPersonQuotaHistory AS spqh 
+              INNER JOIN Sales.SalesPerson AS sp 
+             ON spqh.BusinessEntityID = sp.BusinessEntityID 
+WHERE sp.SalesYTD > 1000000.00; 
+6.	DELETE Sales.ShoppingCartItem             OUTPUT DELETED.*; 
+7.	SELECT COUNT(*) AS BeforeTruncateCount; 
+FROM Production.TransactionHistory; 
+TRUNCATE TABLE Production.TransactionHistory; 
+SELECT COUNT(*) AS AfterTruncateCount 
+FROM Production.TransactionHistory; 
+8.	UPDATE Sales.SalesPerson 
+SET Bonus = 6000, CommissionPct = .10, SalesQuota = NULL; 
+9.	UPDATE Production.Product 
+SET Color = N'Metallic Red' 
+WHERE Name LIKE N'Road-250%' AND Color = N'Red'; 
+10.	UPDATE Sales.SalesPerson SET SalesYTD = SalesYTD + SubTotal 
+FROM Sales.SalesPerson AS sp 
+JOIN Sales.SalesOrderHeader AS so 
+        ON sp.BusinessEntityID = so.SalesPersonID 
+        AND so.OrderDate = (SELECT MAX(OrderDate) 
+                     FROM Sales.SalesOrderHeader 
+                     WHERE SalesPersonID = sp.BusinessEntityID); 
+11.	DECLARE @MyTableVar table( EmpID INT NOT NULL, OldVacationHours INT, 
+                                                      NewVacationHours INT, ModifiedDate DATETIME); 
+UPDATE TOP (10) HumanResources.Employee 
+SET VacationHours = VacationHours * 1.25 
+OUTPUT INSERTED.BusinessEntityID, 
+            DELETED.VacationHours, 
+            INSERTED.VacationHours, 
+            INSERTED.ModifiedDate 
+INTO @MyTableVar; 
+ 
+SELECT EmpID, OldVacationHours, NewVacationHours, ModifiedDate FROM @MyTableVar; 
+12.	BEGIN TRANSACTION CandidateDelete; 
+DELETE FROM HumanResources.JobCandidate 
+            WHERE JobCandidateID = 13; 
+COMMIT TRANSACTION CandidateDelete; 
+13.	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ; 
+BEGIN TRANSACTION; 
+SELECT * FROM HumanResources.EmployeePayHistory; 
+SELECT * FROM HumanResources.Department; 
+COMMIT TRANSACTION; 
+
+
+
+3
+
+
+
+
