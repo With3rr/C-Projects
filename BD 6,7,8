@@ -132,6 +132,101 @@ COMMIT TRANSACTION;
 
 3
 
+Zad 1
+Create view [dbo].[vwPersonName] AS
+Select BusinessEntityId,
+FirstName,MiddleName,
+LastName
+From Person.Person
+GO
+SELECT GETDATE()
+SELECT dbo.fnGetDate(GETDATE())
+Zad 2
+Create Function fmployeeEmail(@ID int)
+Returns varchar(50)
+As
+Begin
+Declare @email varchar(50)
+Select @email =EmailAddress
+From Person.emailAdress
+Where BussinesEntityId =@ID
+Return @email
+End
+Select fEmployeeEmail   przykładowy_id_pracownika
+
+Zad 3
+Create function fnGetDate
+(
+@input datetime
+)
+Returns varchar(10)
+As
+Begin
+Declare @result varchar(10)
+Set @result =convert(varchar(10),@input,103)
+Return @result
+Go
+
+Select dbo.fnGetDate(Getdate())
+
+Zadanie 4
+
+
+
+CREATE FUNCTION fEmployeeByGender(@Gender nchar(1))
+RETURNS table
+AS
+Return
+(
+(select * from humanResources.Employee where Gender =@Gender)
+)
+GO
+Select * from fEmployeeByGender(‘F’)
+
+5
+Create Function
+fnGetVendorPurchaseOrders(@VendorId int)
+returns table
+as
+return
+(
+Select PurchaseOrderID,RevisionNumber,[status],orderDate,ShipDate,
+SubTotal,TotalDue from Purchasing.PurchaseOrderHeader where VendorID=@VendorID
+)
+GO
+
+Select * from fnGetVendorPurchaseOrders(1624)
+
+
+
+
+
+Zad 6
+Create Procedure pGetPersonName @PersonId nvarchar(15)
+As
+Select businessEntityID,FirstName
+Middlename,LastName from dbo.vwPersonName where BusinessEntityId=@PErsonId
+Go
+
+
+Zad 3
+Zreate Trigger Sales.trigCurrency
+ON Sales.Currency
+After Insert
+As
+Begin
+	Declare @name varchar(50)
+	Select @name =Name
+	From inserted
+	If len(@name)<5
+	Begin
+		Rollback transaction
+	End
+END
+
+
+
+
 
 
 
