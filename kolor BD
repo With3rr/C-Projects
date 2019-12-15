@@ -1,0 +1,289 @@
+1
+CREATE TABLE With3rr_Student  
+(  
+ID_Student [int] PRIMARY KEY IDENTITY(1,1) ,   
+Imie [varchar](100) NOT NULL,   
+Nazwisko [varchar](200) NULL,   
+Nr_albumu varchar(10) not null,  
+DataUr datetime not null  )   
+  
+CREATE TABLE With3rr_Adres   
+(   
+id_adres int PRIMARY KEY IDENTITY(1,1),   
+Ulica varchar(50),   
+KodPocztowy varchar(11),   
+Miejscowosc varchar(50) not null,   
+Adres_typ int not null,   
+Adres_student_id int FOREIGN KEY REFERENCES With3rr_Student ([ID_Student])   
+)   insert into With3rr_Student (imie, nazwisko, nr_albumu, DataUr) 
+values ('Jan','Nowakowski','w85678', '1981-12-10')    insert into With3rr_Adres (ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id)   values ('Broniewskiego 2','35-225','Rzeszów',1,1)   
+ insert into With3rr_Student (imie, nazwisko, nr_albumu, DataUr) 
+ values ('Tadeusz','Kowalski','w78923','1993-10-11')    insert into With3rr_Adres (ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id)   values ('Sucharskiego 5/1','35-225','Dębica',1,2)
+ 
+ 
+ alter view With3rrWidok
+ as
+ select a.Imie,a.Nazwisko,b.Ulica,b.kodpocztowy,b.miejscowosc,a.Dataur, cast(Datediff(year,a.DataUr,GETDATE()) as varchar(2)) +' '+ 'lat' as wiek from With3rr_Student a inner join With3rr_Adres b
+ ON a.ID_Student=b.Adres_student_id where b.Miejscowosc='Rzeszów'
+ GO
+
+
+ select * from With3rrWidok
+ 
+
+
+ create function With3rrfuncion(@id [int])
+ returns varchar(100)
+ as
+ begin
+ declare @elo varchar(100)
+ select @elo =  ISNULL((b.Kodpocztowy + ' '+ b.ulica + ' ' + b.Miejscowosc),'Brak') from With3rr_Adres as b
+ where @id=b.Adres_student_id
+ return @elo
+ END
+
+
+ Select dbo.With3rrfuncion(1)
+
+
+
+ Alter function With3rrfunction2(@id [int])
+ returns table
+ AS
+ return
+ (select a.imie,a.nazwisko,b.ulica,b.kodpocztowy from With3rr_Student  a inner join 
+ With3rr_Adres b ON ID_Student=Adres_student_id where b.Adres_student_id=@id)
+ Go
+
+ Select * from With3rrfunction2(1)
+
+
+ alter trigger trig1
+ on With3rr_Adres
+ after insert
+ as 
+ begin
+		declare @elo [int]
+		select @elo=Adres_typ from
+		inserted
+		if @elo NOT BETWEEN 1 and 2
+		Begin
+			rollback transaction
+		END
+END
+
+select * from With3rr_Adres
+
+insert into With3rr_Adres (ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id)   values ('Saksona 2','38-215','Warszara',3,1) 
+
+
+
+alter procedure With3rrproc @imie varchar(20),@nazwisko varchar(20),@nralbumu varchar(10),@Dataaur datetime,@Ulicaa varchar(50),@Miejscowoscc varchar(50),@Adrestyp int,@KodPocztowy varchar(11)
+AS
+DECLARE @idstudenta TABLE
+(
+  idStudentt int
+)
+INSERT   With3rr_Student  (imie, nazwisko, nr_albumu, DataUr) Output Inserted.ID_Student into @idstudenta values (@imie,@nazwisko,@nralbumu,@Dataaur)
+INSERT INTO With3rr_Adres (ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id) values (@Ulicaa,@KodPocztowy,@Miejscowoscc,@Adrestyp,(Select * from @idstudenta) )
+GO
+
+
+
+exec With3rrproc @imie='ala',@nazwisko='mazan',@nralbumu='w53033',@Dataaur='1993-10-11',@Ulicaa='mala',@Miejscowoscc='Sielec',@Adrestyp=1,@KodPocztowy='35-225'
+
+
+ 
+
+ select * from With3rr_Student
+ select * from With3rr_Adres
+
+
+alter trigger elo222
+on With3rr_Adres
+after insert
+as 
+begin
+	declare @abc [int]
+	select @abc=Adres_student_id from inserted
+	if @abc  NOT IN (select ID_Student from With3rr_Student)
+	BEGIN
+        PRINT 'Siema ziomuś'
+    END
+END
+
+
+insert into With3rr_Adres (ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id)   values ('Olchowianina','35-225','Dębica',1,9)
+
+select ID_Student from With3rr_Student
+
+
+
+
+create table elo (id int ,nazwa varchar(50))
+
+insert into elo (id,nazwa) values(3,'elooo')
+
+select * from elo
+
+delete from elo where id=1
+
+update elo set nazwa ='won' where id =2
+
+
+typ 2
+CREATE TABLE dbo.With3rr  
+(  
+ID_Student [int] PRIMARY KEY IDENTITY(1,1) ,   
+Imie [varchar](100) NOT NULL,   
+Nazwisko [varchar](200) NULL,   
+Nr_albumu varchar(10) not null,  
+DataUr datetime not null  )   
+  
+CREATE TABLE dbo.With3rr_Adres
+(   
+id_adres int PRIMARY KEY IDENTITY(1,1),   
+Ulica varchar(50),   
+KodPocztowy varchar(11),   
+Miejscowosc varchar(50) not null,   
+Adres_typ int not null,   
+Adres_student_id int FOREIGN KEY REFERENCES dbo.With3rr ([ID_Student])   
+)   insert into dbo.With3rr (imie, nazwisko, nr_albumu, DataUr)  values ('Jan','Nowakowski','w85678', '1981-12-10')    insert into dbo.With3rr_Adres (ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id)   values ('Broniewskiego 2','35-225','Rzeszów',1,1)   
+ insert into dbo.With3rr (imie, nazwisko, nr_albumu, DataUr)  values ('Tadeusz','Kowalski','w78923','1993-10-11')    insert into dbo.With3rr_Adres (ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id)   values ('Sucharskiego 5/1','35-225','Dębica',1,2)
+
+ select * from With3rr
+  select * from With3rr_Adres
+zadanie 1
+
+ create view widoczek
+ as
+ select a.Imie,a.Nazwisko,b.Ulica,b.KodPocztowy,b.Miejscowosc,a.DataUr,(cast(datediff(year,a.DataUr,Getdate()) as varchar(20))+ 'lat') wiekStudenta
+ from With3rr as a inner join With3rr_Adres as b on a.ID_Student=b.Adres_student_id where Miejscowosc='Rzeszów'
+ go
+
+ select * from widoczek
+
+ zadanie 2 a
+ alter function fun1(@idstud int)
+ returns varchar(60)
+ as
+ begin
+	declare @s varchar(60)
+	select @s= isnull((b.Ulica +' '+ b.KodPocztowy+' '+ b.miejscowosc),'Brak adresu')
+	from  With3rr_Adres as b 
+	where b.Adres_student_id=@idstud
+	return @s
+
+END
+select dbo.fun1(1)
+
+zadanie 2 b
+
+alter function funs(@idk int)
+returns table
+as
+return
+(
+	(select a.Imie,a.Nazwisko,isnull((b.ulica + ' '+b.kodpocztowy+' '+b.miejscowosc),'Brak adresu') Adres  from
+	With3rr as a inner join With3rr_Adres as b ON a.ID_Student=b.Adres_student_id Where
+	a.ID_Student=@idk)
+
+
+
+)
+go
+select * from funs(1)
+
+
+zadanie 3
+
+create trigger trig
+on With3rr_Adres
+after insert
+as
+begin
+	declare @a int
+	select @a=Adres_typ from inserted
+	if @a not in(1,2)
+	begin
+	print'zle '
+	rollback transaction
+	end
+	else
+	begin
+	print 'dobrze'
+	end
+end
+
+select * from With3rr_Adres
+
+insert into dbo.With3rr_Adres (ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id)   values ('melaniego 5/1','35-225','Dębica',3,2)
+
+zadanie 3 inne
+
+alter  trigger fun
+on With3rr_Adres
+after update
+as
+begin
+	declare @as varchar(100)
+	select @as = Miejscowosc from inserted
+	if @as <>'Debica'
+	Begin
+	print 'Stara wartosc :'
+	select Miejscowosc from deleted
+	print 'miales dac debice a dales'
+	select Miejscowosc from inserted
+	rollback transaction
+	end
+
+end
+
+update With3rr_Adres set Miejscowosc ='Warszawa' 
+zadanie 4
+
+create procedure asas @imie varchar(20),@nazwisko varchar(20),@nralbomu varchar(20),@dataur datetime,@ulica varchar(20),@miejscowosc varchar(20),@kodpocztowy varchar(20),@adrestyp int
+as
+declare @pa table
+(
+ikd int
+)
+insert With3rr (imie, nazwisko, nr_albumu, DataUr) Output inserted.ID_Student into @pa values(@imie,@nazwisko,@nralbomu, @dataur)
+insert into With3rr_Adres(ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id)   values (@ulica,@kodpocztowy,@miejscowosc,@adrestyp,(select * from @pa))   
+
+
+go
+
+exec asas @imie='ala',@nazwisko='mazan',@nralbomu='w53033',@dataur='1993-10-11',@ulica='mala',@miejscowosc='Sielec',@adrestyp=1,@kodpocztowy='35-225'
+
+select * from Sales.SalesPerson 
+select * from  Sales.SalesOrderHeader 
+
+zadanie 5
+
+create trigger tr2
+on With3rr_Adres
+after insert
+as
+begin
+	declare @a int
+	select @a =Adres_student_id  from inserted
+	if @a in  (select ID_Student  from With3rr)
+	begin
+	print 'Dobrze'
+	end
+	else
+	begin
+	print 'zle'
+	end
+end
+
+ 
+insert into With3rr_Adres (ulica, KodPocztowy, Miejscowosc, Adres_typ,Adres_student_id) 
+values ('Sggggg 5/1','35-225','Dębica',1,6)    
+
+
+
+
+
+
