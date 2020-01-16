@@ -1,0 +1,104 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <conio.h>
+#include<deque>;
+#include<list>;
+
+using namespace std;
+
+template<class T>
+class stosik
+{
+private:
+    int it;
+    T pamietnik;
+public:
+    T* iterator;
+    T* tabliczka;
+    stosik(void)
+    {
+        it = 0;
+        tabliczka = new T[100];
+    }
+    stosik(int elementy)
+    {
+        it = 0;
+        tabliczka = new T[elementy];
+    }
+    ~stosik(void)
+    {
+        delete tabliczka;
+    }
+    void push_back(T);
+    T pop_front(void);
+    void dealokacja(void);
+    int size(void);
+    bool empty(void);
+};
+
+
+template<class T>
+bool stosik<T>::empty()
+{
+    return (it > 0) ? false : true;
+}
+template<class T>
+int stosik<T>::size()
+{
+    return it;
+
+}
+
+template<class T>
+T stosik<T>::pop_front()
+{
+    if (it != 0)
+    {
+        pamietnik = tabliczka[0];
+        it = it - 1;
+        dealokacja();
+        return tabliczka[0];
+       
+    }
+    
+   
+}
+template<class T>
+void stosik<T>::push_back(T a)
+{
+    tabliczka[it] = a;
+    it++;
+
+}
+
+template<class T>
+void stosik<T>::dealokacja()
+{
+    for (int i = 1; i <= it; i++)
+    {
+        tabliczka[i-1] = tabliczka[i];
+
+
+    }
+}
+
+
+
+
+
+int main()
+{
+    stosik<int> s;
+    s.push_back(5);
+    s.push_back(15);
+    s.push_back(30);
+    s.pop_front();
+  
+ 
+   
+
+    cout << endl;
+
+    return 0;
+}
