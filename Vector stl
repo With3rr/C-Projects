@@ -1,78 +1,119 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <conio.h>
+#include<deque>;
+#include<list>;
+
 using namespace std;
 
-template <typename T>
-T square(T x)
+template<class T>
+class stosik
 {
-    return x * x;
-}
-template<typename T>
-class BoVector
-{
-    T array[1000];
-    int size;
+private:
+    int it;
+    T pamietnik;
 public:
-    BoVector() :size(0){}
-    void push(T x)
+    typedef T* iterator;
+    T* tabliczka;
+    stosik(void)
     {
-        array[size] = x;
-        size++;
+        it = 0;
+        tabliczka = new T[100];
     }
-    T get(int i) const
+    stosik(int elementy)
     {
-        return array[i];
+        it = 0;
+        tabliczka = new T[elementy];
     }
-    int getSize() const
+    ~stosik(void)
     {
-        return size;
+        delete tabliczka;
     }
-    void print() const
-    {
-        for (int i = 0; i < size; i++)
-        {
-            cout << array[i] << endl;
-        }
-    }
+    void push_back(T);
+    T pop_front(void);
+    void dealokacja(void);
+    int size(void);
+    bool empty(void);
+    T* begin(void);
+    T* end(void);
 };
-template <typename T>
-BoVector<T> operator +(const BoVector<T>& a1, const BoVector<T>& a2)
-{
-    BoVector<T> ret;
-    int a = a1.getSize();
-    int b = a2.getSize();
-    int s = a > b ? b : a;
-    
 
-    for (int i = 0; i < s; i++)
-    {
-        ret.push(a1.get(i) + a2.get(i));
-    }
-    return ret;
+template<class T>
+T* stosik<T>::begin()
+{
+    return tabliczka;
+
+}
+template<class T>
+T* stosik<T>::end()
+{
+    return tabliczka + it;
 
 }
 
+template<class T>
+bool stosik<T>::empty()
+{
+    return (it > 0) ? false : true;
+}
+template<class T>
+int stosik<T>::size()
+{
+    return it;
+
+}
+
+template<class T>
+T stosik<T>::pop_front()
+{
+    if (it != 0)
+    {
+        pamietnik = tabliczka[0];
+        it = it - 1;
+        dealokacja();
+        return tabliczka[0];
+       
+    }
+    
+   
+}
+template<class T>
+void stosik<T>::push_back(T a)
+{
+    tabliczka[it] = a;
+    it++;
+
+}
+
+template<class T>
+void stosik<T>::dealokacja()
+{
+    for (int i = 1; i <= it; i++)
+    {
+        tabliczka[i-1] = tabliczka[i];
+
+
+    }
+}
 
 int main()
 {
-    BoVector<int>we;
-    we.push(1);
-    we.push(2);
-    we.push(3);
-    we.push(4);
-    we.print();
+    stosik<int> st;
+    stosik<int>::iterator st1 = st.begin();
+
+    for (int i = 0; i < 15; i++)
+    {
+        st.push_back(i);
+
+    }
+    for (st1 = st.begin(); st1 != st.end(); st1++)
+    {
+        cout << *st1<<"\n";
+    }
+   
+
     cout << endl;
-    cout << endl;
-    BoVector<int>ws;
-    ws.push(5);
-    ws.push(6);
-    ws.push(7);
-    ws.push(8);
-    ws.print();
-    cout << endl;
-    cout << endl;
-    BoVector<int>sa;
-    sa = we + ws;
-    sa.print();
-    
-    
+
+    return 0;
 }
