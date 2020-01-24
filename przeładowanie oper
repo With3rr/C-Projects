@@ -1,0 +1,64 @@
+#include <iostream>
+#include  <string>
+using namespace std;
+
+
+class prostokot
+{
+private:
+    int a, b;
+public:
+    prostokot()
+    {
+        a = 0;
+        b = 0;
+    }
+    prostokot(int a, int b)
+    {
+        this->a = a;
+        this->b = b;
+    }
+    void wypisz()
+    {
+        cout << "Pole to: " << a * b;
+    }
+    void czy(prostokot* a)
+    {
+        if (this == a)
+        {
+            cout << "To ten sam obiekt";
+        }
+    }
+    prostokot & operator +( prostokot & param)
+    {
+        prostokot *var= new prostokot;
+        var->a = a + param.a;
+        var->b = b + param.b;
+        return  *var;
+ 
+    }
+    prostokot &operator =(prostokot& param)
+    {
+        this->a = param.a + 2;
+        this->b = param.b + 3;
+        return *this;
+    }
+};
+int main()
+{
+
+    prostokot* a1 = new prostokot(1,2);
+    prostokot* a3 = new prostokot(4, 6);
+    a1->wypisz();
+    prostokot* a2 = new prostokot;
+    *a2 = (*a1 +*a3);
+    a2->wypisz();
+
+  
+    
+
+   
+   
+
+    
+}
