@@ -4,6 +4,7 @@
 #include <conio.h>
 #include<deque>;
 #include<list>;
+#include<time.h>
 
 using namespace std;
 
@@ -28,16 +29,83 @@ public:
     }
     ~stosik(void)
     {
-        delete tabliczka;
+        delete [] tabliczka;
     }
     void push_back(T);
     T pop_front(void);
-    void dealokacja(void);
     int size(void);
     bool empty(void);
     T* begin(void);
     T* end(void);
+    T max();
+    T min();
+    void sortuj();
+    void wypisz();
+protected:
+    void dealokacja(void);
 };
+template<class T>
+void stosik<T>::wypisz()
+{
+    for (int i = 0; i < it; i++)
+    {
+        cout << *(tabliczka + i)<<" ";
+        
+    }
+    
+}
+
+template<class T>
+T stosik<T>::max()
+{
+    T max = tabliczka[0];
+    for (int i=0; i < it; i++)
+    {
+        if (max < tabliczka[i])
+        {
+            max = tabliczka[i];
+        }
+
+
+    }
+    return max;
+  
+     
+}
+template<class T>
+T stosik<T>::min()
+{
+    T min = tabliczka[0];
+    for (int i=0; i < it; i++)
+    {
+        if (min > tabliczka[i])
+        {
+            min = tabliczka[i];
+        }
+
+
+    }
+    return min;
+
+
+}
+template<class T>
+void stosik<T>::sortuj()
+{
+    for (int i = 0; i < it; i++)
+    {
+        for (int j = 0; j < it-1; j++)
+        {
+            if (tabliczka[j] > tabliczka[j + 1])
+            {
+                swap(tabliczka[j],tabliczka[j+1]);
+            }
+
+        }
+    }
+
+
+}
 
 template<class T>
 T* stosik<T>::begin()
@@ -73,10 +141,10 @@ T stosik<T>::pop_front()
         it = it - 1;
         dealokacja();
         return tabliczka[0];
-       
+
     }
-    
-   
+
+
 }
 template<class T>
 void stosik<T>::push_back(T a)
@@ -86,32 +154,39 @@ void stosik<T>::push_back(T a)
 
 }
 
+
 template<class T>
 void stosik<T>::dealokacja()
 {
     for (int i = 1; i <= it; i++)
     {
-        tabliczka[i-1] = tabliczka[i];
+        tabliczka[i - 1] = tabliczka[i];
 
 
     }
 }
 
+
 int main()
 {
+    srand(time(NULL));
     stosik<int> st;
     stosik<int>::iterator st1 = st.begin();
 
     for (int i = 0; i < 15; i++)
     {
-        st.push_back(i);
+        st.push_back(rand()%15);
 
     }
-    for (st1 = st.begin(); st1 != st.end(); st1++)
-    {
-        cout << *st1<<"\n";
-    }
-   
+    st.wypisz();
+    cout << endl;
+    st.sortuj();
+    st.wypisz();
+    cout << endl;
+    cout<<st.max();
+    cout << endl;
+    cout<<st.min();
+
 
     cout << endl;
 
