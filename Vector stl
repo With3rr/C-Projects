@@ -1,3 +1,5 @@
+// ConsoleApplication9.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
+//
 #include <iostream>
 #include <vector>
 #include <string>
@@ -29,7 +31,7 @@ public:
     }
     ~stosik(void)
     {
-        delete [] tabliczka;
+        delete[] tabliczka;
     }
     void push_back(T);
     T pop_front(void);
@@ -49,17 +51,17 @@ void stosik<T>::wypisz()
 {
     for (int i = 0; i < it; i++)
     {
-        cout << *(tabliczka + i)<<" ";
-        
+        cout << *(tabliczka + i) << " ";
+
     }
-    
+
 }
 
 template<class T>
 T stosik<T>::max()
 {
     T max = tabliczka[0];
-    for (int i=0; i < it; i++)
+    for (int i = 0; i < it; i++)
     {
         if (max < tabliczka[i])
         {
@@ -69,14 +71,14 @@ T stosik<T>::max()
 
     }
     return max;
-  
-     
+
+
 }
 template<class T>
 T stosik<T>::min()
 {
     T min = tabliczka[0];
-    for (int i=0; i < it; i++)
+    for (int i = 0; i < it; i++)
     {
         if (min > tabliczka[i])
         {
@@ -94,11 +96,11 @@ void stosik<T>::sortuj()
 {
     for (int i = 0; i < it; i++)
     {
-        for (int j = 0; j < it-1; j++)
+        for (int j = 0; j < it - 1; j++)
         {
             if (tabliczka[j] > tabliczka[j + 1])
             {
-                swap(tabliczka[j],tabliczka[j+1]);
+                swap(tabliczka[j], tabliczka[j + 1]);
             }
 
         }
@@ -165,6 +167,20 @@ void stosik<T>::dealokacja()
 
     }
 }
+template<class Iterator,class T>
+Iterator find(Iterator a1, Iterator a2, T& wartosc)
+{
+
+    for (Iterator i = a1; i != a2&&*i!=wartosc; i++)
+    {
+        return i;
+    }
+
+
+
+}
+
+
 
 
 int main()
@@ -172,10 +188,11 @@ int main()
     srand(time(NULL));
     stosik<int> st;
     stosik<int>::iterator st1 = st.begin();
+    stosik<int>::iterator wynik;
 
-    for (int i = 0; i < 15; i++)
+    for (int i = 15; i >0; i--)
     {
-        st.push_back(rand()%15);
+        st.push_back(i);
 
     }
     st.wypisz();
@@ -183,9 +200,23 @@ int main()
     st.sortuj();
     st.wypisz();
     cout << endl;
-    cout<<st.max();
+    cout << st.max();
     cout << endl;
-    cout<<st.min();
+    cout << st.min();
+    cout << endl;
+
+    wynik=find(st.begin(), st.end(), 16);
+    if (wynik != st.end())
+    {
+        cout << "Znaleziono liczbe:";
+        cout << *wynik;
+    }
+    else
+    {
+        cout << "Liczby nie znaleziono";
+    }
+
+
 
 
     cout << endl;
